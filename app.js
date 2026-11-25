@@ -294,6 +294,7 @@ function onNetUp(){
       });
     }
   },3200);
+  setTimeout(()=>{if(mq&&mq.connected&&window.__xiangeSeed!==1){window.__xiangeSeed=1;let n=0;(state.products||[]).forEach(p=>{if(!p||!p.id)return;try{if(typeof mainRetainTopics!=="undefined"&&mainRetainTopics.has(NS+"products/"+p.id))return;mq.publish(NS+"products/"+p.id,JSON.stringify(p),{qos:0,retain:true});n++;}catch(e){}});}},8000);
   heartbeat();
 }
 function heartbeat(){if(state.me&&mq&&mq.connected)pub(NS+'presence/'+encodeURIComponent(state.me.name),{on:true,ts:Date.now()},true);}
